@@ -32,7 +32,7 @@ class RobotBehaviorThread(threading.Thread):
 	def run(self):
 		robot=None
 		while not self.done:
-			for robot in self.robotList:
+                    for robot in self.robotList:
 				if robot and self.go:
 					#############################################
 					# START OF YOUR WORKING AREA!!!
@@ -83,7 +83,7 @@ def main():
     gMaxRobotNum = 1; # max number of robots to control
     comm = RobotComm(gMaxRobotNum)
     comm.start()
-    print 'Bluetooth starts'  
+    print 'Bluetooth starts'
     robotList = comm.robotList
 
     behaviors = RobotBehaviorThread(robotList)

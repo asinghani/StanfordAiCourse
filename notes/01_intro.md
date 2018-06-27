@@ -4,7 +4,7 @@
 
 Professor: *Dr. Qin Chen*
 
-+ SLAM + Particle Filters
+- SLAM + Particle Filters
 
 Topics:
 - Basics
@@ -38,3 +38,15 @@ Daily Topics:
 6. Motion Planning (Graph)
 7. Motion Planning (C-space)
 
+Project:
+- Line follow
+    - Step function
+    - P(ID) controller
+- Follow other robots
+- Make track
+- *Behaviours*
+    - Square
+    - Shy, Dance
+    - Follow Leader
+    - Follow Line
+    - Other?
