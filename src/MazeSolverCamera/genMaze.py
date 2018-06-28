@@ -12,4 +12,4 @@ for row in range(50, 850, 250):
 for col in range(50, 1100, 250):
     cv2.line(img, (col, 50), (col, 800), (0, 0, 0), thickness)
 
-cv2.imwrite("maze.png", img)
+cv2.imwrite("mazeBase.png", img)
