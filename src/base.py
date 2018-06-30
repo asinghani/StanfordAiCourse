@@ -11,36 +11,55 @@ robot = None
 
 def tankDrive(left, right):
     global robot
+    if robot is None:
+        return
     robot.set_wheel(0, left)
     robot.set_wheel(1, right)
 
-def forward(speed, time):
+def forward(speed, t):
+    global robot
+    if robot is None:
+        return
     tankDrive(speed, speed)
-    time.sleep(time)
+    time.sleep(t)
     tankDrive(0, 0)
 
-def turn(speed, time):
+def turn(speed, t):
+    global robot
+    if robot is None:
+        return
     tankDrive(speed, -speed)
-    time.sleep(time)
+    time.sleep(t)
     tankDrive(0, 0)
 
 def stop():
+    global robot
+    if robot is None:
+        return
     tankDrive(0, 0)
 
 def getProximity():
     global robot
+    if robot is None:
+        return (0, 0)
     return (robot.get_proximity(0), robot.get_proximity(1))
 
 def getFloor():
     global robot
+    if robot is None:
+        return (0, 0)
     return (robot.get_floor(0), robot.get_floor(1))
 
 def getBattery():
     global robot
+    if robot is None:
+        return 0.0
     return robot.get_battery()
 
 def getAccel():
     global robot
+    if robot is None:
+        return (0, 0, 0)
     return (robot.get_acceleration(0), robot.get_acceleration(1), robot.get_acceleration(2))
 
 COLOR_WHITE = 7
@@ -72,6 +91,7 @@ def beepSync(t=0.5):
 def end():
     global endVar
     endVar = True
+    print("Program ended")
 
 def runRobot():
     global endVar, robotList, func, robot
@@ -87,6 +107,9 @@ def runRobot():
                 time.sleep(0.1)
     robotList[0].reset()
 
+def shutdown(window):
+    end
+    window.quit()
 
 def start(periodicFunc):
     global robotList, func
@@ -98,12 +121,12 @@ def start(periodicFunc):
     robotList = comm.robotList
 
     window = tk.Tk()
-    canvas = tk.Canvas(window, bg="white", width=300, height= 300)
+    canvas = tk.Canvas(window, bg="white", width = 100, height = 100)
     canvas.pack()
 
     button = tk.Button(window, text="Exit")
     button.pack()
-    button.bind("<Button-1>", lambda: window.quit())
+    button.bind("<Button-1>", lambda _: shutdown(window))
 
     robotThread = Thread(target = runRobot)
     robotThread.start()

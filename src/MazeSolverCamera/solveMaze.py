@@ -3,6 +3,7 @@ from capMaze import getMazeData
 import queue
 
 lastFoundImg = None
+CAMERA = 3
 
 def solveMaze(img, x):
     global lastFoundImg
@@ -119,7 +120,7 @@ def solveMaze(img, x):
 
     cv2.imshow("maze", mazeTopView)
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(CAMERA)
 cap.set(3, 960)
 cap.set(4, 540)
 while True:

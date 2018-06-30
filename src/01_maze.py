@@ -19,6 +19,8 @@ class RobotThread(threading.Thread):
         time.sleep(10)
 
     def run(self):
+        self.turning = False
+        self.turnIters = 0
         while not self.stopThread:
             if self.robotList and len(self.robotList) > 0:
                 self.robot = self.robotList[0]
@@ -31,31 +33,33 @@ class RobotThread(threading.Thread):
                     print(fwd, right)
                     time.sleep(0.1)
 
+                    if self.turning and self.turnIters < 35:
+                        self.turnIters = self.turnIters + 1
+                        self.robot.set_wheel(0, 25)
+                        self.robot.set_wheel(1, -20)
+                    else:
+                        self.turning = False
 
-                    if right == 0:
+                    if right < 10:
+                        self.turning = True
+                        self.turnIters = 0
                         print("RIGHT")
                         # TURN RIGHT
                         self.robot.set_wheel(0, 25)
-                        self.robot.set_wheel(1, -25)
-                        time.sleep(1.03)
-                        self.robot.set_wheel(0, 0)
-                        self.robot.set_wheel(1, 0)
+                        self.robot.set_wheel(1, -20)
 
                     fwd = self.robot.get_proximity(0)
 
-                    if fwd < 55:
+                    if fwd < 45:
                         print("FORWARD")
-                        self.robot.set_wheel(0, 26)
-                        self.robot.set_wheel(1, 25)
-                        time.sleep(3.5)
-                        self.robot.set_wheel(0, 0)
-                        self.robot.set_wheel(1, 0)
+                        self.robot.set_wheel(0, 50)
+                        self.robot.set_wheel(1, 50)
 
-                    if right > 0 and fwd >= 55:
+                    if right > 10 and fwd >= 45:
                         print("LEFT")
-                        self.robot.set_wheel(0, -25)
-                        self.robot.set_wheel(1, 25)
-                        time.sleep(1.03)
+                        self.robot.set_wheel(0, -20)
+                        self.robot.set_wheel(1, 20)
+                        time.sleep(1.33)
                         self.robot.set_wheel(0, 0)
                         self.robot.set_wheel(1, 0)
 
