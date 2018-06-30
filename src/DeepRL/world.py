@@ -4,6 +4,7 @@ sys.path.append("../")
 import numpy as np
 import base_web
 from robot import Robot
+from point import Pt, _epsilonEquals
 
 # Obstacle class (only rectangles)
 class Obstacle:
@@ -22,27 +23,93 @@ class Obstacle:
         self.y1 = min(_y1, _y2)
         self.y2 = max(_y1, _y2)
 
-        self.pt1 = (self.x1, self.y1)
-        self.pt2 = (self.x2, self.y1)
-        self.pt3 = (self.x2, self.y2)
-        self.pt4 = (self.x1, self.y2)
+        self.pt1 = Pt(self.x1, self.y1)
+        self.pt2 = Pt(self.x2, self.y1)
+        self.pt3 = Pt(self.x2, self.y2)
+        self.pt4 = Pt(self.x1, self.y2)
+
+        # Array of (p, r)
+        self.segments = [
+            (self.pt1, self.pt2 - self.pt1),
+            (self.pt2, self.pt3 - self.pt2),
+            (self.pt3, self.pt4 - self.pt3),
+            (self.pt4, self.pt1 - self.pt4)
+        ]
 
     def containsPoint(self, pt):
-        return pt[0] > self.x1 and pt[0] < self.x2 and pt[1] > self.y1 and pt[1] < self.y2
+        return pt.x > self.x1 and pt.x < self.x2 and pt.y > self.y1 and pt.y < self.y2
+
+    def intersect(self, pt, angle, maxLen):
+        q = pt
+        s = Pt(maxLen, 0.0).rotate(angle)
+        intersections = []
+
+        for seg in self.segments:
+            r = seg[1]
+            a = (q - seg[0])
+            b = r.cross(s)
+
+            if _epsilonEquals(b, 0):
+                pass
+            else:
+                t = a.cross(s) / b
+                u = a.cross(r) / b
+
+                if t >= 0 and t <= 1 and u >= 0 and u <= 1 and seg[0] + r*t == q + s*u:
+                    intersections.append(q + s*u)
+
+        if len(intersections) == 0:
+            return None
+        else:
+            return min(intersections, key=lambda p: p.dist(pt))
 
 
 class World:
     def __init__(self, width, height, timestamp):
         self.width = width
         self.height = height
-        self.x = x
-        self.y = y
         self.timestamp = timestamp
         self.robot = Robot(timestamp = timestamp)
-        self.proxL = -1
-        self.proxR = -1
+        self.proxL = None
+        self.proxR = None
+        self.pointL = None
+        self.pointR = None
+        self.obstacles = []
+
+    def addObstacle(self, x, y, w, h):
+        self.obstacles.append(Obstacle(x, y, w, h))
+
+    def raycast(self, point, angle, maxLen):
+        intersections = []
+        for obs in self.obstacles:
+            i = obs.intersect(point, angle, maxLen)
+            if i is not None:
+                intersections.append(i)
+
+        if len(intersections) == 0:
+            return None
+        else:
+            return min(intersections, key=lambda p: p.dist(point))
+
+    def getLeftDist(self):
+        point = self.raycast(self.robot.getLeftSensorPos(), self.robot.theta, self.robot.sensorRange)
+        if point is not None:
+            return self.robot.getLeftSensorPos().dist(point), point
+        else:
+            return None, None
+
+    def getRightDist(self):
+        point = self.raycast(self.robot.getRightSensorPos(), self.robot.theta, self.robot.sensorRange)
+        if point is not None:
+            return self.robot.getRightSensorPos().dist(point), point
+        else:
+            return None, None
 
     def simulate(self, velR, velL, timestep):
         self.timestamp = self.timestamp + timestep
         self.robot.simulate(velR, velL, self.timestamp)
+
+        self.proxL, self.pointL = self.getLeftDist()
+        self.proxR, self.pointR = self.getRightDist()
+
 

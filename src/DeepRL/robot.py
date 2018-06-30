@@ -1,4 +1,5 @@
 from math import sin, cos
+from point import Pt
 
 # TODO: tune these values
 WHEEL_SPACING = 1.5
@@ -11,15 +12,6 @@ B = float(WHEEL_SPACING * TRACK_SCRUB)
 def _isZero(val, epsilon = EPSILON):
     return abs(val) < epsilon
 
-def _scaleTuple(t, s):
-    return (t[0] * s, t[1] * s)
-
-def _add(t1, t2):
-    return (t1[0] + t2[0], t1[1] + t2[1])
-
-def _rotate(vec, theta):
-    return (vec[0] * cos(theta) - vec[1] * sin(theta), vec[1] * cos(theta) + vec[0] * sin(theta))
-
 class Robot:
     # Coords = robot wheelbase center
     def __init__(self, x = 0.0, y = 0.0, theta = 0.0, timestamp = 0.0):
@@ -28,8 +20,8 @@ class Robot:
         self.theta = theta
         self.time = timestamp
         self.robotSize = (2.0, 2.0)
-        self.leftSensorOffset = (1.0, 0.8)
-        self.rightSensorOffset = (1.0, -0.8)
+        self.leftSensorOffset = Pt(1.0, 3.8)
+        self.rightSensorOffset = Pt(1.0, -3.8)
         self.sensorRange = 8.0 # cm
 
     def simulate(self, velR, velL, timestamp):
@@ -51,22 +43,27 @@ class Robot:
             self.theta = theta
 
     def getPosition(self):
-        return (self.x, self.y)
+        return Pt(self.x, self.y)
 
     def getOrientation(self):
         return self.theta
 
     def getLeftSensorPoint(self, dist):
-        point = (self.x, self.y)
-        point = _add(point, _rotate(self.leftSensorOffset, self.theta))
-        point = _add(point, _rotate((dist, 0.0), self.theta))
+        point = Pt(self.x, self.y)
+        point = point + self.leftSensorOffset.rotate(self.theta)
+        point = point + Pt(dist, 0.0).rotate(self.theta)
 
         return point
 
     def getRightSensorPoint(self, dist):
-        point = (self.x, self.y)
-        point = _add(point, _rotate(self.rightSensorOffset, self.theta))
-        point = _add(point, _rotate((dist, 0.0), self.theta))
+        point = Pt(self.x, self.y)
+        point = point + self.rightSensorOffset.rotate(self.theta)
+        point = point + Pt(dist, 0.0).rotate(self.theta)
 
         return point
 
+    def getLeftSensorPos(self):
+        return self.getLeftSensorPoint(0.0)
+
+    def getRightSensorPos(self):
+        return self.getRightSensorPoint(0.0)
