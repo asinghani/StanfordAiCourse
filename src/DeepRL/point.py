@@ -54,3 +54,6 @@ class Pt:
 
     def cross(self, other):
         return self.x * other.y - self.y * other.x
+
+    def serialize(self):
+        return {"x": self.x, "y": self.y}

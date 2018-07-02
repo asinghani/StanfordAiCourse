@@ -7,8 +7,8 @@ import logging
 log = logging.getLogger("werkzeug")
 log.setLevel(logging.ERROR)
 
-readDict = {}
-writeDict = {}
+outputDict = {}
+inputDict = {}
 
 def start(htmlFile, jsFile, baseDict, eventCallback):
     global readDict, writeDict
@@ -33,9 +33,9 @@ def start(htmlFile, jsFile, baseDict, eventCallback):
         jsonData = request.args.get("data")
         data = json.loads(jsonData)
         for key in data.keys():
-            writeDict[key] = data[key]
+            inputDict[key] = data[key]
 
-        return json.dumps(readDict)
+        return json.dumps(outputDict)
 
     @app.route("/event")
     def event():

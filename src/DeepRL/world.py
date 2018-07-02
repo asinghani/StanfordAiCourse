@@ -1,8 +1,5 @@
 from __future__ import print_function
-import sys
-sys.path.append("../")
 import numpy as np
-import base_web
 from robot import Robot
 from point import Pt, _epsilonEquals
 
@@ -63,6 +60,8 @@ class Obstacle:
         else:
             return min(intersections, key=lambda p: p.dist(pt))
 
+    def serialize(self):
+        return {"x": self.x, "y": self.y, "w": self.width, "h": self.height}
 
 class World:
     def __init__(self, width, height, timestamp):
@@ -111,5 +110,3 @@ class World:
 
         self.proxL, self.pointL = self.getLeftDist()
         self.proxR, self.pointR = self.getRightDist()
-
-

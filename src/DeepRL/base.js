@@ -13,7 +13,7 @@ $(document).ready(() => {
             readDict = JSON.parse(output)
             updateCallback()
         })
-    }, 100);
+    }, 30);
 
     $("[data-event]").each(function() {
         $(this).click(function() {

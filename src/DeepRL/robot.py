@@ -1,4 +1,4 @@
-from math import sin, cos
+from math import sin, cos, pi
 from point import Pt
 
 # TODO: tune these values
@@ -40,7 +40,7 @@ class Robot:
             self.x = self.x + coeff * (sin(theta) - sin(oldTheta))
             self.y = self.y - coeff * (cos(theta) - cos(oldTheta))
 
-            self.theta = theta
+            self.theta = theta % (2 * pi)
 
     def getPosition(self):
         return Pt(self.x, self.y)
