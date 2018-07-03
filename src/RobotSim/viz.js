@@ -172,8 +172,8 @@ $(document).keypress(function(event){
         var y = 0
     }
 
-    cmdLeft = parseInt(4.0 * (y + x))
-    cmdRight = parseInt(4.0 * (y - x))
+    cmdLeft = parseInt(3.0 * (y + x))
+    cmdRight = parseInt(3.0 * (y - x))
 
     writeDict = {l: cmdLeft, r: cmdRight}
 });

@@ -1,8 +1,13 @@
 import time
 from flask import Flask, request
-import thread
 import json
 import logging
+import sys
+
+if (sys.version_info > (3, 0)):
+    import _thread as thread
+else:
+    import thread
 
 log = logging.getLogger("werkzeug")
 log.setLevel(logging.ERROR)
@@ -11,8 +16,8 @@ outputDict = {}
 inputDict = {}
 
 def start(htmlFile, jsFile, baseDict, eventCallback):
-    global readDict, writeDict
-    readDict = baseDict
+    global outputDict, inputDict
+    inputDict = baseDict
 
     app = Flask(__name__)
 
@@ -30,6 +35,7 @@ def start(htmlFile, jsFile, baseDict, eventCallback):
 
     @app.route("/update")
     def getData():
+        global inputDict, outputDict
         jsonData = request.args.get("data")
         data = json.loads(jsonData)
         for key in data.keys():

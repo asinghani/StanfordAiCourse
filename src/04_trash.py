@@ -42,7 +42,7 @@ def alignCb():
 
 fsm.setEnterCallback("aligning", alignCb)
 
-fsm.setEnterCallback("free", lambda: tankDrive(75, 75))
+fsm.setEnterCallback("free", lambda: tankDrive(45, 45))
 
 def startRotating():
     tankDrive(-40, 40)
@@ -50,7 +50,7 @@ def startRotating():
     def stopRotating():
         fsm.runAction("rotateCompleted")
 
-    Timer(random.uniform(0.5, 1.0), stopRotating).start()
+    Timer(random.uniform(0.3, 0.7), stopRotating).start()
 
 fsm.setEnterCallback("rotating", startRotating)
 

@@ -10,7 +10,8 @@ world = World(1000, 1000, 0)
 world.robot.x = -9.5
 
 def genObstacles():
-    world.obstacles.clear()
+    del world.obstacles[:]
+
     def createObstacle(xRange, yRange, widthRange, heightRange):
         world.addObstacle(random.randint(xRange[0], xRange[1]),
                 random.randint(yRange[0], yRange[1]),
@@ -48,6 +49,8 @@ def updateOutput():
         "robotHeight": world.robot.robotSize[1],
         "robotLeftSensorPos": world.robot.getLeftSensorPos().serialize(),
         "robotRightSensorPos": world.robot.getRightSensorPos().serialize(),
+        "robotLeftFloorSensorPos": world.robot.getLeftFloorSensorPos().serialize(),
+        "robotRightFloorSensorPos": world.robot.getRightFloorSensorPos().serialize(),
         "obstacles": [obs.serialize() for obs in world.obstacles]
     }
 

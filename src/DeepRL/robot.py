@@ -12,6 +12,9 @@ B = float(WHEEL_SPACING * TRACK_SCRUB)
 def _isZero(val, epsilon = EPSILON):
     return abs(val) < epsilon
 
+SENSOR_MIN_RANGE = 0.5
+SENSOR_MAX_RANGE = 8.0
+
 class Robot:
     # Coords = robot wheelbase center
     def __init__(self, x = 0.0, y = 0.0, theta = 0.0, timestamp = 0.0):
@@ -20,9 +23,18 @@ class Robot:
         self.theta = theta
         self.time = timestamp
         self.robotSize = (2.0, 2.0)
-        self.leftSensorOffset = Pt(1.0, 3.8)
-        self.rightSensorOffset = Pt(1.0, -3.8)
-        self.sensorRange = 8.0 # cm
+        self.leftSensorOffset = Pt(1.0, 0.8)
+        self.rightSensorOffset = Pt(1.0, -0.8)
+        self.sensorRange = SENSOR_MAX_RANGE # cm
+        self.minRange = SENSOR_MIN_RANGE
+
+
+    def getPoints(self):
+        pt1 = Pt(self.x - self.robotSize[0] / 2.0, self.y - self.robotSize[1] / 2.0)
+        pt2 = Pt(self.x + self.robotSize[0] / 2.0, self.y - self.robotSize[1] / 2.0)
+        pt3 = Pt(self.x + self.robotSize[0] / 2.0, self.y + self.robotSize[1] / 2.0)
+        pt4 = Pt(self.x - self.robotSize[0] / 2.0, self.y + self.robotSize[1] / 2.0)
+        return [pt1, pt2, pt3, pt4]
 
     def simulate(self, velR, velL, timestamp):
         dt = float(timestamp - self.time)
@@ -30,8 +42,8 @@ class Robot:
 
         if _isZero(velR - velL, DRIVING_STRAIGHT):
             vel = float(velR + velL) / 2
-            self.x = self.x + vel * dt * sin(self.theta)
-            self.y = self.y + vel * dt * cos(self.theta)
+            self.x = self.x + vel * dt * cos(self.theta)
+            self.y = self.y + vel * dt * sin(self.theta)
         else:
             oldTheta = float(self.theta)
             theta = (velR - velL) * dt / B + oldTheta

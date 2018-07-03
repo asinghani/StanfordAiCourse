@@ -95,9 +95,13 @@ class World:
         self.pointL = None
         self.pointR = None
         self.obstacles = []
+        self.darkRegions = []
 
     def addObstacle(self, x, y, w, h):
         self.obstacles.append(Obstacle(x, y, w, h))
+
+    def addDarkRegion(self, x, y, w, h):
+        self.darkRegions.append(Obstacle(x, y, w, h))
 
     def checkCollision(self):
         pt1, pt2, pt3, pt4 = self.robot.getPoints()
