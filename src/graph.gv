@@ -1,0 +1,190 @@
+digraph "graph" {
+	node [color=lightblue2 style=filled]
+	rankdir=LR size="8,5"
+	"(312, 128, 0, 257)"
+	edge [arrowhead=none]
+	"(312, 128, 0, 257)" -> "(313, 302, 282, 322)" [label="Cost = 174.002873539"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(312, 128, 0, 257)" -> "(313, 96, 0, 193)" [label="Cost = 32.0156211872"]
+	edge [arrowhead=normal]
+	"(166, 155, 0, 311)"
+	edge [arrowhead=none]
+	"(166, 155, 0, 311)" -> "(229, 155, 0, 311)" [label="Cost = 63.0"]
+	edge [arrowhead=normal]
+	"(164, 174, 0, 349)"
+	edge [arrowhead=none]
+	"(164, 174, 0, 349)" -> "(166, 155, 0, 311)" [label="Cost = 19.1049731745"]
+	edge [arrowhead=normal]
+	"(232, 128, 0, 257)"
+	edge [arrowhead=none]
+	"(232, 128, 0, 257)" -> "(250, 128, 0, 257)" [label="Cost = 18.0"]
+	edge [arrowhead=normal]
+	"(313, 448, 397, 500)"
+	edge [arrowhead=none]
+	"(313, 448, 397, 500)" -> "(320, 448, 397, 500)" [label="Cost = 7.0"]
+	edge [arrowhead=normal]
+	"(91, 96, 0, 192)"
+	edge [arrowhead=none]
+	"(91, 96, 0, 192)" -> "(20, 20, 20, 20)" [label="Cost = 104.004807581"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(91, 96, 0, 192)" -> "(161, 96, 0, 192)" [label="Cost = 70.0"]
+	edge [arrowhead=normal]
+	"(345, 302, 282, 322)"
+	edge [arrowhead=none]
+	"(345, 302, 282, 322)" -> "(346, 415, 330, 500)" [label="Cost = 113.004424692"]
+	edge [arrowhead=normal]
+	"(396, 415, 330, 500)"
+	edge [arrowhead=none]
+	"(396, 415, 330, 500)" -> "(408, 415, 330, 500)" [label="Cost = 12.0"]
+	edge [arrowhead=normal]
+	"(20, 20, 20, 20)"
+	"(408, 60, 0, 121)"
+	"(320, 302, 282, 322)"
+	edge [arrowhead=none]
+	"(320, 302, 282, 322)" -> "(345, 302, 282, 322)" [label="Cost = 25.0"]
+	edge [arrowhead=normal]
+	"(313, 302, 282, 322)"
+	edge [arrowhead=none]
+	"(313, 302, 282, 322)" -> "(320, 302, 282, 322)" [label="Cost = 7.0"]
+	edge [arrowhead=normal]
+	"(312, 448, 397, 500)"
+	edge [arrowhead=none]
+	"(312, 448, 397, 500)" -> "(313, 448, 397, 500)" [label="Cost = 1.0"]
+	edge [arrowhead=normal]
+	"(346, 60, 0, 121)"
+	edge [arrowhead=none]
+	"(346, 60, 0, 121)" -> "(396, 60, 0, 121)" [label="Cost = 50.0"]
+	edge [arrowhead=normal]
+	"(161, 96, 0, 192)"
+	edge [arrowhead=none]
+	"(161, 96, 0, 192)" -> "(164, 174, 0, 349)" [label="Cost = 78.0576709875"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(161, 96, 0, 192)" -> "(164, 472, 445, 500)" [label="Cost = 376.011967895"]
+	edge [arrowhead=normal]
+	"(232, 447, 395, 500)"
+	edge [arrowhead=none]
+	"(232, 447, 395, 500)" -> "(250, 448, 397, 500)" [label="Cost = 18.0277563773"]
+	edge [arrowhead=normal]
+	"(161, 388, 276, 500)"
+	edge [arrowhead=none]
+	"(161, 388, 276, 500)" -> "(164, 174, 0, 349)" [label="Cost = 214.021027004"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(161, 388, 276, 500)" -> "(164, 472, 445, 500)" [label="Cost = 84.0535543567"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(161, 388, 276, 500)" -> "(91, 388, 276, 500)" [label="Cost = 70.0"]
+	edge [arrowhead=normal]
+	"(435, 134, 0, 269)"
+	edge [arrowhead=none]
+	"(435, 134, 0, 269)" -> "(408, 60, 0, 121)" [label="Cost = 78.7718223732"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(435, 134, 0, 269)" -> "(499, 250, 0, 499)" [label="Cost = 132.483961293"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(435, 134, 0, 269)" -> "(408, 231, 193, 269)" [label="Cost = 100.687635785"]
+	edge [arrowhead=normal]
+	"(346, 415, 330, 500)"
+	edge [arrowhead=none]
+	"(346, 415, 330, 500)" -> "(396, 415, 330, 500)" [label="Cost = 50.0"]
+	edge [arrowhead=normal]
+	"(450, 450, 450, 450)"
+	edge [arrowhead=none]
+	"(450, 450, 450, 450)" -> "(435, 134, 0, 269)" [label="Cost = 316.355812338"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(450, 450, 450, 450)" -> "(435, 415, 330, 500)" [label="Cost = 38.0788655293"]
+	edge [arrowhead=normal]
+	"(313, 96, 0, 193)"
+	edge [arrowhead=none]
+	"(313, 96, 0, 193)" -> "(320, 60, 0, 121)" [label="Cost = 36.6742416418"]
+	edge [arrowhead=normal]
+	"(164, 472, 445, 500)"
+	edge [arrowhead=none]
+	"(164, 472, 445, 500)" -> "(166, 472, 445, 500)" [label="Cost = 2.0"]
+	edge [arrowhead=normal]
+	"(91, 388, 276, 500)"
+	edge [arrowhead=none]
+	"(91, 388, 276, 500)" -> "(20, 20, 20, 20)" [label="Cost = 374.786605951"]
+	edge [arrowhead=normal]
+	"(345, 60, 0, 121)"
+	edge [arrowhead=none]
+	"(345, 60, 0, 121)" -> "(346, 60, 0, 121)" [label="Cost = 1.0"]
+	edge [arrowhead=normal]
+	"(320, 448, 397, 500)"
+	edge [arrowhead=none]
+	"(320, 448, 397, 500)" -> "(345, 448, 397, 500)" [label="Cost = 25.0"]
+	edge [arrowhead=normal]
+	"(229, 155, 0, 311)"
+	edge [arrowhead=none]
+	"(229, 155, 0, 311)" -> "(232, 128, 0, 257)" [label="Cost = 27.1661554144"]
+	edge [arrowhead=normal]
+	"(435, 415, 330, 500)"
+	edge [arrowhead=none]
+	"(435, 415, 330, 500)" -> "(499, 250, 0, 499)" [label="Cost = 176.977399687"]
+	edge [arrowhead=normal]
+	edge [arrowhead=none]
+	"(435, 415, 330, 500)" -> "(408, 415, 330, 500)" [label="Cost = 27.0"]
+	edge [arrowhead=normal]
+	"(250, 128, 0, 257)"
+	edge [arrowhead=none]
+	"(250, 128, 0, 257)" -> "(259, 128, 0, 257)" [label="Cost = 9.0"]
+	edge [arrowhead=normal]
+	"(166, 472, 445, 500)"
+	edge [arrowhead=none]
+	"(166, 472, 445, 500)" -> "(229, 472, 445, 500)" [label="Cost = 63.0"]
+	edge [arrowhead=normal]
+	"(259, 128, 0, 257)"
+	edge [arrowhead=none]
+	"(259, 128, 0, 257)" -> "(312, 128, 0, 257)" [label="Cost = 53.0"]
+	edge [arrowhead=normal]
+	"(259, 448, 397, 500)"
+	edge [arrowhead=none]
+	"(259, 448, 397, 500)" -> "(312, 448, 397, 500)" [label="Cost = 53.0"]
+	edge [arrowhead=normal]
+	"(396, 60, 0, 121)"
+	edge [arrowhead=none]
+	"(396, 60, 0, 121)" -> "(408, 60, 0, 121)" [label="Cost = 12.0"]
+	edge [arrowhead=normal]
+	"(345, 448, 397, 500)"
+	edge [arrowhead=none]
+	"(345, 448, 397, 500)" -> "(346, 415, 330, 500)" [label="Cost = 33.0151480384"]
+	edge [arrowhead=normal]
+	"(250, 448, 397, 500)"
+	edge [arrowhead=none]
+	"(250, 448, 397, 500)" -> "(259, 448, 397, 500)" [label="Cost = 9.0"]
+	edge [arrowhead=normal]
+	"(320, 60, 0, 121)"
+	edge [arrowhead=none]
+	"(320, 60, 0, 121)" -> "(345, 60, 0, 121)" [label="Cost = 25.0"]
+	edge [arrowhead=normal]
+	"(499, 250, 0, 499)"
+	"(408, 415, 330, 500)"
+	"(408, 231, 193, 269)"
+	"(229, 472, 445, 500)"
+	edge [arrowhead=none]
+	"(229, 472, 445, 500)" -> "(232, 447, 395, 500)" [label="Cost = 25.179356624"]
+	edge [arrowhead=normal]
+	edge [color=red]
+	"(450, 450, 450, 450)" -> "(435, 415, 330, 500)" [label=1]
+	"(435, 415, 330, 500)" -> "(408, 415, 330, 500)" [label=2]
+	"(408, 415, 330, 500)" -> "(396, 415, 330, 500)" [label=3]
+	"(396, 415, 330, 500)" -> "(346, 415, 330, 500)" [label=4]
+	"(346, 415, 330, 500)" -> "(345, 302, 282, 322)" [label=5]
+	"(345, 302, 282, 322)" -> "(320, 302, 282, 322)" [label=6]
+	"(320, 302, 282, 322)" -> "(313, 302, 282, 322)" [label=7]
+	"(313, 302, 282, 322)" -> "(312, 128, 0, 257)" [label=8]
+	"(312, 128, 0, 257)" -> "(259, 128, 0, 257)" [label=9]
+	"(259, 128, 0, 257)" -> "(250, 128, 0, 257)" [label=10]
+	"(250, 128, 0, 257)" -> "(232, 128, 0, 257)" [label=11]
+	"(232, 128, 0, 257)" -> "(229, 155, 0, 311)" [label=12]
+	"(229, 155, 0, 311)" -> "(166, 155, 0, 311)" [label=13]
+	"(166, 155, 0, 311)" -> "(164, 174, 0, 349)" [label=14]
+	"(164, 174, 0, 349)" -> "(161, 96, 0, 192)" [label=15]
+	"(161, 96, 0, 192)" -> "(91, 96, 0, 192)" [label=16]
+	"(91, 96, 0, 192)" -> "(20, 20, 20, 20)" [label=17]
+}

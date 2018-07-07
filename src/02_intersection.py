@@ -21,7 +21,7 @@ def periodicFunc(robot):
 
     l1 = robot.get_floor(0)
     l2 = robot.get_floor(1)
-    if l1 + l2 < 50:
+    if l1 + l2 < 80:
         stop()
         time.sleep(0.1)
         robot.set_musical_note(40)

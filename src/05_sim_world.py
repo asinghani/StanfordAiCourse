@@ -318,14 +318,14 @@ class virtual_world:
     ######################################################################
     def in_collision(self, a, x, y):
         # REAL ROBOT ONLY
-        return False
+        #return False
 
         def intersectLine(pt1, pt2, ptA, ptB):
             q = pt1
             s = pt2 - pt1
             intersections = []
 
-            r = ptB
+            r = ptB - ptA
             a = (q - ptA)
             b = r.cross(s)
 
@@ -336,6 +336,8 @@ class virtual_world:
                 u = a.cross(r) / b
 
                 if t >= 0 and t <= 1 and u >= 0 and u <= 1:
+                    point = q + u * s
+                    #self.canvas.create_oval(point[0] - 2, point[1] - 2, point[0] + 2, point[1] + 2)
                     return True
 
             return False

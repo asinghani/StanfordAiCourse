@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <iframe id="frame" src="" frameborder="0"></iframe>
+    <script>
+        var src = "file:///Users/anish/Anish/Programming/StanfordAiCourse/src/graph.png"
+        var frame = document.getElementById("frame")
+        setInterval(function() {
+            frame.src = ""
+            frame.src = src
+
+            frame.height = window.innerHeight - 25
+            frame.width = window.innerWidth - 25
+        }, 250)
+    </script>
+</body>
+</html>
