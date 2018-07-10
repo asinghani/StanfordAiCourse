@@ -65,7 +65,7 @@ def getRobotPosition(image):
 
     x = y = theta = None
 
-    if np.all(ids != None):
+    if np.all(ids != None) and ids is not None:
         rvec, tvec, _ = aruco.estimatePoseSingleMarkers(corners[0], 0.05, cameraMatrix, distortionCoefficients)
 
         euler = rotationMatrixToEulerAngles(rvec)
@@ -81,7 +81,7 @@ def getRobotPosition(image):
     return x, y, theta, drawnImage
 
 if __name__ == "__main__":
-    cap = cv2.VideoCapture(2)
+    cap = cv2.VideoCapture(3)
 
     while True:
         frame = cap.read()[1]

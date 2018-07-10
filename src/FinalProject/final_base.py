@@ -132,7 +132,7 @@ def start(periodicFunc):
 
     window = tk.Tk()
 
-    image = np.zeros((960, 540, 3), dtype=np.uint8)
+    image = np.zeros((1080, 960, 3), dtype=np.uint8)
     image = Image.fromarray(image)
     image = ImageTk.PhotoImage(image)
 
