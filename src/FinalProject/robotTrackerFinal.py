@@ -61,6 +61,7 @@ def drawForwardAxis(image, _rvec, _tvec, length):
 
 def setup(imgs):
     calibPoints = []
+    reprojectionPoints = []
 
     for image in imgs:
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -89,15 +90,40 @@ def setup(imgs):
 
             calibPoints.append(points)
 
+            tagPoints = []
+            for id in ids:
+                if id == 0:
+                    continue
+                i = np.where(ids == id)
+                tag = baseCorners[i][0][0]
+                #print(tag.shape)
+                tag = np.swapaxes(tag, 0, 1)
+                centreX = np.average(tag[0])
+                centreY = np.average(tag[1])
+                tagPoints.append((centreX, centreY))
+
+            tagPoints = np.array(tagPoints, dtype=np.float32)
+            tagPoints = perspective.order_points(tagPoints)
+
+            reprojectionPoints.append(tagPoints)
+
 
     points = np.zeros_like(calibPoints[0])
     for p in calibPoints:
         points = points + p
     points = points / len(calibPoints)
+
+    points = np.zeros_like(reprojectionPoints[0])
+    for p in reprojectionPoints:
+        points = points + p
+    points = points / len(reprojectionPoints)
+    dstPoints = np.array([(0, 0), (810, 0), (810, 500), (0, 500)], dtype=np.float32)
+    reprojectionMatrix = cv2.getPerspectiveTransform(dstPoints, points)
+
     dstPoints = np.array([(-20.25, -12.5), (20.25, -12.5), (20.25, 12.5), (-20.25, 12.5)], dtype=np.float32)
     transformMatrix = cv2.getPerspectiveTransform(points, dstPoints)
 
-    return transformMatrix
+    return transformMatrix, reprojectionMatrix
 
 def getRobotPosition(image, transformMatrix):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -120,25 +146,38 @@ def getRobotPosition(image, transformMatrix):
             robotIds = np.array([ids[i] for i in range(len(ids)) if ids[i] == 0])
             robotRvec, robotTvec, _ = aruco.estimatePoseSingleMarkers(robotCorners, 2.5, cameraMatrix, distortionCoefficients)
 
-            for i in range(len(robotIds)):
-                markers[robotIds[i]] = (robotRvec[i], robotTvec[i])
+            i = np.where(robotIds == 0)
+            tag = robotCorners[i][0][0]
+            #print(tag.shape)
+            tag_ = np.swapaxes(tag, 0, 1)
+            centreX = np.average(tag_[0])
+            centreY = np.average(tag_[1])
+            #for i in range(len(robotIds)):
+            #    markers[robotIds[i]] = (robotRvec[i], robotTvec[i])
 
-            euler = rotationMatrixToEulerAngles(robotRvec)
-            x = robotTvec[0, 0, 0]
-            y = robotTvec[0, 0, 1]
-            theta = euler[2] * -1 + math.pi / 2.0
-            if theta < 0:
-                theta = theta + 2.0 * math.pi
+            #euler = rotationMatrixToEulerAngles(robotRvec)
+            #x = robotTvec[0, 0, 0]
+            #y = robotTvec[0, 0, 1]
+            #theta = euler[2] * -1 + math.pi / 2.0
+            #if theta < 0:
+            #    theta = theta + 2.0 * math.pi
 
-            x2 = x + math.cos(theta) * 0 - math.sin(theta) * 100.0
-            y2 = y + math.sin(theta) * 0 + math.cos(theta) * 100.0
+            #x2 = x + math.cos(theta) * 0 - math.sin(theta) * 100.0
+            #y2 = y + math.sin(theta) * 0 + math.cos(theta) * 100.0
+            theta = 0
 
-            robotPoint = np.array([(x, y), (x2, y2)], dtype=np.float32)
+            robotPoint = np.array([(centreX, centreY)], dtype=np.float32)
             robotPoint = np.array([robotPoint])
+            #print(robotPoint.shape)
             newPts = cv2.perspectiveTransform(robotPoint, transformMatrix)
+            x = newPts[0][0][0]
+            y = newPts[0][0][1]
+            #print(x, y)
 
-            theta = math.atan2(newPts[0, 1, 0] - newPts[0, 0, 0], newPts[0, 1, 1] - newPts[0, 0, 1])
-            theta = euler[2] * -1 + math.pi / 2.0
+            tag1 = 1
+            tag2 = 0
+            theta = math.atan2(tag[tag1][0] - tag[tag2][0], tag[tag1][1] - tag[tag2][1])
+            #theta = euler[2] * -1 + math.pi / 2.0
             if theta < 0:
                 theta = theta + 2.0 * math.pi
 

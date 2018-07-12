@@ -117,11 +117,15 @@ def shutdown(window):
     window.quit()
 
 updateImageFunc = lambda _: None
+updateImage2Func = lambda _: None
 
 def updateImage(image):
     updateImageFunc(image)
 
-def start(periodicFunc):
+def updateImage2(image):
+    updateImage2Func(image)
+
+def start(periodicFunc, mapClickCallback):
     global robotList, func
     func = periodicFunc
     comm = RobotComm(1)
@@ -148,9 +152,29 @@ def start(periodicFunc):
         imagePanel.configure(image=img)
         imagePanel.image = img
 
+    image2 = np.zeros((1080, 960, 3), dtype=np.uint8)
+    image2 = Image.fromarray(image2)
+    image2 = ImageTk.PhotoImage(image2)
+
+    imagePanel2 = tk.Label(image=image2, borderwidth=2, relief="solid")
+    imagePanel2.image = image2
+    imagePanel2.bind("<Button-1>", mapClickCallback)
+
+    imagePanel2.pack(side="bottom", padx=10, pady=10)
+
+    def _updateImage2(img):
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        img = Image.fromarray(img)
+        img = ImageTk.PhotoImage(img)
+
+        imagePanel2.configure(image=img)
+        imagePanel2.image = img
 
     global updateImageFunc
     updateImageFunc = _updateImage
+
+    global updateImage2Func
+    updateImage2Func = _updateImage2
 
     button = tk.Button(window, text="Exit")
     button.pack()

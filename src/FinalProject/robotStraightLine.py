@@ -5,15 +5,18 @@ import sys
 sys.path.append("../")
 from robotTrackerFinal import getRobotPosition, setup
 import time
-from final_base import start, end, tankDrive, turn, forward, getFloor, getProximity, stop, beepSync, setMusicNote, updateImage
+from final_base import start, end, tankDrive, turn, forward, getFloor, getProximity, stop, beepSync, setMusicNote, updateImage, updateImage2
 import math
+from environment import Environment
 
 x = y = theta = None
 cte = None
 
+env = Environment()
+
 def updateRobotPos():
-    global cte, x, y, theta
-    cap = WebcamVideoStream(src=1)
+    global cte, x, y, theta, env
+    cap = WebcamVideoStream(src=int(sys.argv[1]))
     cap.start()
 
     print("Setting up...")
@@ -36,6 +39,10 @@ def updateRobotPos():
 
         cte = y
         updateImage(outImage)
+        env.setRobotPose(x, y, theta)
+        m = env.visualizeMap()
+        updateImage2(m)
+
         time.sleep(0.01)
         #cv2.imshow("output", outImage)
         #cv2.waitKey(10)
