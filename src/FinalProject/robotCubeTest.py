@@ -25,7 +25,7 @@ pp = PurePursuit([(0.0, 0.0)], 2.5, 0.5)
 
 def updateRobotPos():
     global cte, x, y, theta, env
-    frame = cv2.imread("ObstacleNN/TrainingData1/image163.png")
+    frame = cv2.imread("ObstacleNN/TrainingData1/image183.png")
 
     print("Setting up...")
     setupImgs = []
@@ -40,7 +40,7 @@ def updateRobotPos():
         #print(frame[50:60, 50:60, 1])
 
         x, y, theta, outImage = getRobotPosition(frame, transformMatrix)
-        obstacles = getObstaclePositions(frame, transformMatrix)
+        obstacles = getObstaclePositions(frame, transformMatrix, debug = True)
 
         print(x, y, theta)
 
@@ -83,4 +83,4 @@ def periodicFunc(robot):
     time.sleep(0.05)
 
 Thread(target=updateRobotPos).start()
-start(periodicFunc)
+start(periodicFunc, lambda _: None, lambda _: None)

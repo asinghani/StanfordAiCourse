@@ -125,7 +125,7 @@ def updateImage(image):
 def updateImage2(image):
     updateImage2Func(image)
 
-def start(periodicFunc, mapClickCallback):
+def start(periodicFunc, mapClickCallback, imageClickCallback):
     global robotList, func
     func = periodicFunc
     comm = RobotComm(1)
@@ -142,6 +142,7 @@ def start(periodicFunc, mapClickCallback):
 
     imagePanel = tk.Label(image=image)
     imagePanel.image = image
+    imagePanel.bind("<Button-1>", imageClickCallback)
     imagePanel.pack(side="top", padx=10, pady=10)
 
     def _updateImage(img):
@@ -158,6 +159,7 @@ def start(periodicFunc, mapClickCallback):
 
     imagePanel2 = tk.Label(image=image2, borderwidth=2, relief="solid")
     imagePanel2.image = image2
+
     imagePanel2.bind("<Button-1>", mapClickCallback)
 
     imagePanel2.pack(side="bottom", padx=10, pady=10)
@@ -175,6 +177,7 @@ def start(periodicFunc, mapClickCallback):
 
     global updateImage2Func
     updateImage2Func = _updateImage2
+
 
     button = tk.Button(window, text="Exit")
     button.pack()

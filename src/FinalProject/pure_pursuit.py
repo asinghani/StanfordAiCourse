@@ -53,7 +53,7 @@ class PurePursuit:
 
     def getControl(self, currentPos, currentAngle):
         if self.__dist__(currentPos, self.points[-1]) < self.targetEpsilon:
-            return 0.0, 0.0, (0.0, 0.0), (0.0, 0.0)
+            return 0.0, 0.0, (0.0, 0.0), (0.0, 0.0), True
 
         lookahead = self.__getLookAheadPoint__(currentPos)
 
@@ -64,7 +64,7 @@ class PurePursuit:
 
         curvature = 2.0 * pt[0] / float(pt[0]**2 + pt[1]**2)
 
-        velocity = 13.0
+        velocity = 22.0
 
         #print("C", curvature, velocity)
 
@@ -73,4 +73,4 @@ class PurePursuit:
         linvel = (tankLeft + tankRight) / 2.0
         angvel = (tankRight - tankLeft) / 2.0
 
-        return tankLeft, tankRight, lookahead, pt
+        return tankLeft, tankRight, lookahead, pt, False

@@ -42,7 +42,7 @@ def mergePolygons(sourcePolygons):
 
 
 class Spline:
-    def __init__(self, points, smoothing=0.1, mode="segments"):
+    def __init__(self, points, smoothing=0.1, mode="morepoints"):
         self.mode = mode
         if mode == "segments":
             self.points = points
@@ -50,8 +50,11 @@ class Spline:
                 self.points.append(self.points[0])
             return
 
-        x = [pt[0] for pt in points]
-        y = [pt[1] for pt in points]
+        if mode == "morepoints":
+            self.points = Spline(points, mode="segments").interpolate(len(points) * 4)
+
+        x = [pt[0] for pt in self.points]
+        y = [pt[1] for pt in self.points]
         deg = 3
         if len(x) == 3:
             deg = 2
@@ -65,8 +68,8 @@ class Spline:
             self.spline = splineInfo[0]
         else:
             self.spline = None
-            if len(points) > 0:
-                self.pt = points[0]
+            if len(self.points) > 0:
+                self.pt = self.points[0]
             else:
                 self.pt = None
 
@@ -78,11 +81,13 @@ class Spline:
             points.shape = (0, 2)
             for i in range(numSegments):
                 pt1 = np.array(self.points[i], dtype=np.float32)
-                pt2 = self.points[i + 1]
+                pt2 = np.array(self.points[i + 1], dtype=np.float32)
+
                 vec = np.array([pt2[0] - pt1[0], pt2[1] - pt1[1]], dtype=np.float32)
                 pts = np.arange(0.0, 1.0, 1.0 / float(samplesPerSeg))
                 pts = np.array([vec * pt + pt1 for pt in pts], dtype=np.float32)
                 points = np.append(points, pts, axis=0)
+                points = np.append(points, np.array([vec * 0.99 + pt1], dtype=np.float32), axis=0)
 
             return points
 
@@ -110,6 +115,18 @@ class Environment:
         self.obstacles = np.array([], dtype=np.float32)
         self.cSpaceObstacles = np.array([], dtype=np.float32)
         self.cSpaceMargin = margin
+        self.graph = None
+        self.origin = None
+        self.dest = None
+
+        self.obstacleCorners = np.array([], dtype=np.float32)
+
+    def validPoint(self, point):
+        for obs in self.cSpaceObstacles:
+            if cv2.pointPolygonTest(obs, point, measureDist = False) >= 0:
+                return False
+
+        return True
 
     def setObstacles(self, obstacles):
         self.obstacles = obstacles
@@ -121,7 +138,7 @@ class Environment:
 
             if len(oldObs) == len(newObs):
                 mse = np.mean((oldObs - newObs) ** 2)
-                if mse > 0.35:
+                if mse > 0.15:
                     self.updated = True
             else:
                 self.updated = True
@@ -166,8 +183,18 @@ class Environment:
 
             finalObs.append(obstacleData)
 
+        self.obstacleCorners = []
+        for obstacle in finalObs:
+            for pt in obstacle:
+                self.obstacleCorners.append([pt.x, pt.y])
+
+        self.obstacleCorners = np.array(self.obstacleCorners, dtype=np.float32)
+
         try:
             graph.build(finalObs)
+            self.graph = graph
+            self.origin = vg.Point(startPoint[0], startPoint[1])
+            self.dest = vg.Point(endPoint[0], endPoint[1])
             path = graph.shortest_path(vg.Point(startPoint[0], startPoint[1]), vg.Point(endPoint[0], endPoint[1]))
             return [(p.x, p.y) for p in path]
         except:
@@ -233,7 +260,18 @@ class Environment:
         if self.cSpaceObstacles is not None and len(self.cSpaceObstacles) != 0:
             for pts in self.cSpaceObstacles:
                 pts_ = np.array([scalePoint(pt) for pt in pts])
-                cv2.drawContours(mapImg, [pts_], -1, color = cvColor(colors.red), thickness = 3)
+                cv2.drawContours(mapImg, [pts_], -1, color = cvColor(colors.red), thickness = 2)
+
+        if self.obstacleCorners is not None and len(self.obstacleCorners) != 0:
+            for x, y in self.obstacleCorners:
+                cv2.circle(mapImg, scalePoint((x, y)), 4, cvColor(colors.purple), -1)
+
+            #if self.graph is not None and self.origin is not None and self.dest is not None:
+            #    for x, y in self.obstacleCorners:
+            #        visiblePoints = vg.visible_vertices.visible_vertices(vg.Point(x, y), self.graph.graph, origin=self.origin, destination=self.dest)
+            #        for pt in visiblePoints:
+            #            cv2.line(mapImg, scalePoint((x, y)), scalePoint((pt.x, pt.y)), cvColor(colors.purple), 1)
+
 
         return mapImg
 
